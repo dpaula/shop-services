@@ -14,8 +14,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.xstream.XStream;
-
 import br.com.dpaula.shop.modelo.Carrinho;
 import br.com.dpaula.shop.modelo.Produto;
 import junit.framework.Assert;
@@ -75,9 +73,7 @@ public class ClienteTest {
 	@Test
 	public void testaRetornoDoCarrinhoEmXMLEsperado() {
 
-		String conteudo = target.path("/carrinhos/1").request().get(String.class);
-
-		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+		Carrinho carrinho = target.path("/carrinhos/1").request().get(Carrinho.class);
 
 		Assert.assertEquals("Rua Vergueiro 3185, 8 andar", carrinho.getRua());
 
@@ -91,10 +87,8 @@ public class ClienteTest {
 		carrinho.setRua("Rua 2 de Setembro 345");
 		carrinho.setCidade("Blumenau");
 
-		// converte par XML
-		String xml = carrinho.toXML();
 		// cria esta entidade só para explicitar que usa type xml
-		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+		Entity<Carrinho> entity = Entity.entity(carrinho, MediaType.APPLICATION_XML);
 
 		// através do target, entra em carrinhos, pega o request e posta a entidade
 		// contendo o carrinho novo
@@ -106,9 +100,9 @@ public class ClienteTest {
 		String location = resp.getHeaderString("Location");
 
 		// atraves de um cliente, navega na uri do novo carrinho e pega ele como string
-		String conteudo = ClientBuilder.newClient().target(location).request().get(String.class);
+		Carrinho carrinhoCarregado = ClientBuilder.newClient().target(location).request().get(Carrinho.class);
 
-		Assert.assertTrue(conteudo.contains("Celular"));
+		Assert.assertEquals("Celular", carrinhoCarregado.getProdutos().get(0).getNome());
 
 	}
 }

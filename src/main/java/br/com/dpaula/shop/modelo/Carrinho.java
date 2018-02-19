@@ -4,14 +4,32 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.thoughtworks.xstream.XStream;
 
+/**
+ * Usando o Jaxb, serializador padrão do java se
+ * 
+ * @author ferna
+ *
+ */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Carrinho {
 
 	private List<Produto> produtos = new ArrayList<Produto>();
 	private String rua;
 	private String cidade;
 	private long id;
+
+	/**
+	 * 
+	 */
+	public Carrinho() {
+	}
 
 	public Carrinho adiciona(Produto produto) {
 		produtos.add(produto);
