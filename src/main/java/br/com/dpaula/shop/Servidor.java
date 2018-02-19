@@ -25,7 +25,7 @@ public class Servidor {
 	 * @throws ProcessingException
 	 */
 	public static HttpServer inicializaServidor() throws ProcessingException {
-		URI uri = URI.create("http://localhost:8787/");
+		URI uri = URI.create("http://localhost:8585/");
 		ResourceConfig config = new ResourceConfig().packages("br.com.dpaula.shop");
 		HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, config);
 		return server;
