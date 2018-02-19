@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,6 +17,7 @@ import com.thoughtworks.xstream.XStream;
 
 import br.com.dpaula.shop.dao.CarrinhoDAO;
 import br.com.dpaula.shop.modelo.Carrinho;
+import br.com.dpaula.shop.modelo.Produto;
 
 @Path("carrinhos")
 public class CarrinhoResource {
@@ -52,6 +54,26 @@ public class CarrinhoResource {
 
 		Carrinho carrinho = new CarrinhoDAO().busca(id);
 		carrinho.remove(produtoId);
+
+		return Response.ok().build();
+	}
+
+	/**
+	 * http://localhost:8585/carrinhos/1/produtos/3467/quantidade
+	 * 
+	 * @param conteudo
+	 * @param id
+	 * @param produtoId
+	 * @return
+	 */
+	@Path("{id}/produtos/{produtoId}/quantidade")
+	@PUT
+	public Response alteraProduto(String conteudo, @PathParam("id") long id, @PathParam("produtoId") long produtoId) {
+
+		Carrinho carrinho = new CarrinhoDAO().busca(id);
+		Produto produto = (Produto) new XStream().fromXML(conteudo);
+
+		carrinho.trocaQuantidade(produto);
 
 		return Response.ok().build();
 	}

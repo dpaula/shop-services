@@ -33,9 +33,14 @@ public class ClienteTest {
 	public void criaServidor() {
 		server = Servidor.inicializaServidor();
 
+		// Criando uma configuração no meu client
 		ClientConfig config = new ClientConfig();
+		// registrando uma API de log na minha configuação
 		config.register(new LoggingFilter());
 
+		// O LoggingFilteré do Jersey, que é uma implementação do JAX-RS. Então, dado o
+		// LoggingFilter, eu crio agora um ClientBuilder.newClient baseado nessa
+		// configuração
 		Client client = ClientBuilder.newClient(config);
 		target = client.target("http://localhost:8585");
 	}
