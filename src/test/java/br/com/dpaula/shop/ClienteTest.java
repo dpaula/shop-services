@@ -48,8 +48,8 @@ public class ClienteTest {
 	public void testaRetornoDoCarrinhoEmXMLEsperado() {
 
 		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target("http://localhost:8787");
-		String conteudo = target.path("/carrinhos").request().get(String.class);
+		WebTarget target = client.target("http://localhost:8585");
+		String conteudo = target.path("/carrinhos/1").request().get(String.class);
 
 		Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
 
