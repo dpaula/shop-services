@@ -42,8 +42,18 @@ public class ClienteTest {
 	@Test
 	public void testaQueAConexaoComOServidorFunciona() {
 
+		// Dentro desse código de teste queremos um cliente http para acessar o
+		// servidor, portanto criamos um cliente novo
 		Client client = ClientBuilder.newClient();
+		// Agora que temos um cliente, queremos usar uma URI base,a URI do servidor,
+		// para fazer várias requisições. No nosso caso é a URI do servidor que estamos
+		// utilizando, o www.mocky.io, portanto dizemos ao nosso cliente que
+		// trabalharemos com o alvo http://www.mocky.io:
 		WebTarget target = client.target("http://www.mocky.io");
+		// vamos agora dizer que queremos fazer uma requisição para uma URI específica,
+		// target, por favor, para esse path '/v2/52aaf5deee7ba8c70329fb7d' faça uma
+		// requisição, e a requisição que faremos é a mais básica, a que pega dados do
+		// servidor, o método get
 		String conteudo = target.path("/v2/52aaf5deee7ba8c70329fb7d").request().get(String.class);
 
 		System.out.println(conteudo);
